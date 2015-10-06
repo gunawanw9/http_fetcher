@@ -1,0 +1,23 @@
+--- http_fetcher-1.1.0/src/http_fetcher.c	2004-03-08 21:06:17.000000000 +0000
++++ http_fetcher-1.1.1/src/http_fetcher.c	2015-10-06 05:45:33.920456406 +0000
+@@ -31,6 +31,10 @@
+ #include <sys/time.h>
+ #include "http_fetcher.h"
+ 
++#define h_addr h_addr_list[0] /* for backward compatibility */
++void herror(const char *s); /* for backward compatibility */
++const char *hstrerror(int err); /* for backward compatibility */
++
+ /* Globals */
+ int timeout = DEFAULT_READ_TIMEOUT;
+ char *userAgent = NULL;
+@@ -611,7 +615,8 @@
+ 		herror(string);
+ 	else if(errorSource == FETCHER_ERROR)
+ 		{
+-		char *stringIndex;
++		/* char *stringIndex; */
++		const char *stringIndex; /* should be as const */
+ 
+ 		if(strstr(http_errlist[http_errno], "%d") == NULL)
+ 			{
